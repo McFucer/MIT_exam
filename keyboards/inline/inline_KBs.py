@@ -1,6 +1,15 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.types.web_app_info import WebAppInfo
 
+
+markup_cont = InlineKeyboardMarkup(
+    inline_keyboard=[
+    [
+       InlineKeyboardButton(text='Понял | Tushundim', callback_data='iqtest_started')
+    ]
+])
+
+
 lang = InlineKeyboardMarkup(
     inline_keyboard=[
     [
@@ -269,16 +278,16 @@ quest16 = InlineKeyboardMarkup(
 quest17 = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(text='a',callback_data='a10')
+            InlineKeyboardButton(text='a',callback_data='a17')
         ],
         [
-            InlineKeyboardButton(text='b',callback_data='b10')
+            InlineKeyboardButton(text='b',callback_data='b17')
         ],
         [
-            InlineKeyboardButton(text='c',callback_data='c10')
+            InlineKeyboardButton(text='c',callback_data='c17')
         ],
         [
-            InlineKeyboardButton(text='d',callback_data='d10')
+            InlineKeyboardButton(text='d',callback_data='d17')
         ]
 ])
 

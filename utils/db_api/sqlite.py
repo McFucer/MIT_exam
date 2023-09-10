@@ -69,6 +69,17 @@ class Database:
 
         return self.execute(sql, parameters=parameters, fetchone=True)
 
+    def select_user_s(self, **kwargs):
+        sql = "SELECT * FROM Users WHERE "
+        sql, parameters = self.format_args(sql, kwargs)
+
+        result = self.execute(sql, parameters=parameters, fetchone=True)
+        if result:
+            columns = ['id', 'Name', 'result_english', 'result_iq', 'email', 'language']
+            return dict(zip(columns, result))
+        else:
+            return None
+
     def count_users(self):
         return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)
 
@@ -82,6 +93,18 @@ class Database:
 
     def delete_users(self):
         self.execute("DELETE FROM Users WHERE TRUE", commit=True)
+
+    def edit_english_result(self, result, id):
+        sql = f"""
+        UPDATE Users SET result_english=? WHERE id=?
+        """
+        return self.execute(sql, parameters=(result, id), commit=True)
+
+    def edit_iq_result(self, result, id):
+        sql = f"""
+        UPDATE Users SET result_iq=? WHERE id=?
+        """
+        return self.execute(sql, parameters=(result, id), commit=True)
 
 
 def logger(statement):

@@ -11,7 +11,7 @@ async def get_all_users(message: types.Message):
     print(users[0][0])
     await message.answer(users)
 
-@dp.message_handler(text="/reklama", user_id=ADMINS,state='*')
+@dp.message_handler(text="/reklamadddddd", user_id=ADMINS,state='*')
 async def send_ad_to_all(message: types.Message):
     users = db.select_all_users()
     for user in users:
