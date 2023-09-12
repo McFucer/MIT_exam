@@ -5,6 +5,7 @@ from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
+from aiogram.types import CallbackQuery
 from aiogram.utils import executor
 
 from app import on_startup
@@ -18,23 +19,29 @@ dp = Dispatcher(bot, storage=storage)
 
 async def timer_callback(message: types.Message, state: FSMContext):
     interval = 600  # Интервал времени в секундах (10 минут = 10 * 60 секунд)
+    current_time = datetime.now()
+    start_time = current_time
 
-    # Запускаем бесконечный цикл, который будет выполняться каждые 10 минут
     while True:
         await asyncio.sleep(interval)  # Ожидаем 10 минут
 
-        # Получаем текущее время и сколько времени прошло с начала запуска таймера
         current_time = datetime.now()
-        passed_time = current_time - message.date
+        passed_time = current_time - start_time
 
-        # Вычисляем оставшееся время в минутах
-        remaining_time = interval // 60 - passed_time.seconds // 60
+        remaining_time = interval - passed_time.seconds
 
-        # Отправляем сообщение с оповещением о прошедших 10 минутах и оставшемся времени
-        await message.answer(f"Прошло 10 минут.")
+        if remaining_time <= 0:
+            # Время вышло, отправляем табличку с данными и показываем всплывающее уведомление
+            table = f"Прошло времени: {passed_time}"
+            await message.answer(table, parse_mode=types.ParseMode.MARKDOWN)
+            await bot.answer_callback_query(message.id, "Прошло 10 минут!", show_alert=True)
 
-    await state.set_state('overall')  # Перевод пользователя в состояние 'overall'
+            # Переводим пользователя в состояние 'overall'
+            await state.update_data(start_time=None)
+            await state.finish()
+            return
 
+        await message.answer(f"Прошло {passed_time} минут.")
 
 @dp.message_handler(Command('start_timer'))
 async def start_timer(message: types.Message, state: FSMContext):

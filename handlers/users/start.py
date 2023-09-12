@@ -55,27 +55,27 @@ async def registration_name_uzb(msg: types.Message):
     except sqlite3.InternalError as err:
         print(err)
 
-@dp.callback_query_handler(state='Russian',text='kid')
-async def rus_kid(call:CallbackQuery, state:FSMContext):
-    await asyncio.create_task(timer_callback(call.message, state))
+@dp.callback_query_handler(text='kid',state='*')
+async def dcac(call:CallbackQuery, state:FSMContext):
     await call.message.delete()
     await call.message.answer('Выберите тест',reply_markup=testing_menu_kid)
+    await asyncio.create_task(timer_callback(call.message, state))
 
 
-@dp.callback_query_handler(state='Russian',text='18+')
-async def rus_kid(call:CallbackQuery, state:FSMContext):
+@dp.callback_query_handler(text='18+',state='*')
+async def dcscvrs(call:CallbackQuery, state:FSMContext):
     await call.message.delete()
     await call.message.answer('Выберите тест:',reply_markup=testing_menu_18)
     await asyncio.create_task(timer_callback(call.message, state))
 
-@dp.callback_query_handler(state='Uzbek',text='kid_uzb')
-async def rus_kid(call:CallbackQuery, state:FSMContext):
-    await asyncio.create_task(timer_callback(call.message, state))
+@dp.callback_query_handler(text='kid_uzb',state='*')
+async def vsvsvfs(call:CallbackQuery, state:FSMContext):
     await call.message.delete()
     await call.message.answer('Test tanlang:',reply_markup=testing_menu_kid_uzb)
-
-@dp.callback_query_handler(state='Uzbek',text='18+_uzb')
-async def rus_kid(call:CallbackQuery, state:FSMContext):
     await asyncio.create_task(timer_callback(call.message, state))
+
+@dp.callback_query_handler(text='18+_uzb',state='*')
+async def vsfvfbsb(call:CallbackQuery, state:FSMContext):
     await call.message.delete()
     await call.message.answer('Test tanlang:',reply_markup=testing_menu_18_uzb)
+    await asyncio.create_task(timer_callback(call.message, state))
