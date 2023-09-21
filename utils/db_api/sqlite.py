@@ -29,7 +29,7 @@ class Database:
 
     def create_table_users(self):
         sql = """
-        CREATE TABLE Users (
+        CREATE TABLE IF NOT EXISTS Users (
             id int NOT NULL,
             Name varchar(255) NOT NULL,
             result_english int ,
@@ -38,7 +38,7 @@ class Database:
             language varchar(3),
             PRIMARY KEY (id)
             );
-"""
+        """
         self.execute(sql, commit=True)
 
     @staticmethod
@@ -48,11 +48,11 @@ class Database:
         ])
         return sql, tuple(parameters.values())
 
-    def add_user(self, id: int, name: str, result_english : int = 0, result_iq : int = 0, email: str = None, language: str = 'uz'):
+    def add_user(self, id: int, name: str, result_english : int = 0, result_iq : int = 0, email: str = None, language: str = 'uz',):
         # SQL_EXAMPLE = "INSERT INTO Users(id, Name, email) VALUES(1, 'John', 'John@gmail.com')"
 
         sql = """
-        INSERT INTO Users(id, Name,result_english,result_iq, email, language) VALUES(?, ?, ?, ?, ?, ?)
+        INSERT INTO Users(id, Name,result_english,result_iq, email, language) VALUES(?, ?, ?, ?, ?,  ?)
         """
         self.execute(sql, parameters=(id, name,result_english, result_iq , email, language), commit=True)
 
@@ -75,7 +75,7 @@ class Database:
 
         result = self.execute(sql, parameters=parameters, fetchone=True)
         if result:
-            columns = ['id', 'Name', 'result_english', 'result_iq', 'email', 'language']
+            columns = ['id', 'Name', 'result_english', 'result_iq', 'email', 'language','adult']
             return dict(zip(columns, result))
         else:
             return None
@@ -105,6 +105,7 @@ class Database:
         UPDATE Users SET result_iq=? WHERE id=?
         """
         return self.execute(sql, parameters=(result, id), commit=True)
+
 
 
 def logger(statement):

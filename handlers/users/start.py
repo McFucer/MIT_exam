@@ -46,7 +46,7 @@ async def registration_name(msg: types.Message):
 @dp.message_handler(state='Uzbek')
 async def registration_name_uzb(msg: types.Message):
     await msg.delete()
-    await msg.answer("Qanaqa test o'tayabsiz:\nSinovni tanlashingiz bilanoq taymer 30 daqiqaga ishga tushadi. Sizga har 10 daqiqada xabar beramiz.\n!!!JAVOBINGIZNI O'ZGARTIROLMAYSIZ!!!", reply_markup=exam_kidoreld_uzb)
+    await msg.answer("Qanaqa test o'tayabsiz:\nTestni tanlashingiz bilanoq taymer 30 daqiqaga ishga tushadi. Sizga har 10 daqiqada xabar beramiz.\n!!!JAVOBINGIZNI O'ZGARTIROLMAYSIZ!!!", reply_markup=exam_kidoreld_uzb)
     name = msg.text
     try:
         db.add_user(id=msg.from_user.id,
@@ -58,24 +58,27 @@ async def registration_name_uzb(msg: types.Message):
 @dp.callback_query_handler(text='kid',state='*')
 async def dcac(call:CallbackQuery, state:FSMContext):
     await call.message.delete()
-    await call.message.answer('Выберите тест',reply_markup=testing_menu_kid)
+    await call.message.answer('Начать тест\n<b>Тест по английскому: 40 вопросов</b>',reply_markup=testing_menu_kid)
     await asyncio.create_task(timer_callback(call.message, state))
 
 
 @dp.callback_query_handler(text='18+',state='*')
 async def dcscvrs(call:CallbackQuery, state:FSMContext):
     await call.message.delete()
-    await call.message.answer('Выберите тест:',reply_markup=testing_menu_18)
+
+    await call.message.answer('Начать тест:\n<b>Тест по английскому: 60 вопросов</b>',reply_markup=testing_menu_18)
     await asyncio.create_task(timer_callback(call.message, state))
 
 @dp.callback_query_handler(text='kid_uzb',state='*')
 async def vsvsvfs(call:CallbackQuery, state:FSMContext):
     await call.message.delete()
-    await call.message.answer('Test tanlang:',reply_markup=testing_menu_kid_uzb)
+    await call.message.answer('Test boshlash:\n<b>Ingliz tili testi: 40 savol</b>',reply_markup=testing_menu_kid_uzb)
     await asyncio.create_task(timer_callback(call.message, state))
 
-@dp.callback_query_handler(text='18+_uzb',state='*')
-async def vsfvfbsb(call:CallbackQuery, state:FSMContext):
+
+@dp.callback_query_handler(text='18+_uzb', state='*')
+async def vsfvfbsb(call: CallbackQuery, state: FSMContext):
     await call.message.delete()
-    await call.message.answer('Test tanlang:',reply_markup=testing_menu_18_uzb)
+
+    await call.message.answer('Test boshlash:\n<b>Ingliz tili testi: 60 savol</b>', reply_markup=testing_menu_18_uzb)
     await asyncio.create_task(timer_callback(call.message, state))

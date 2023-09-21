@@ -11,6 +11,3 @@ from keyboards.inline.inline_KBs import lang
 from loader import dp, db, bot
 
 
-@dp.message_handler()
-async def handler(msg:types.Message):
-    await msg.delete()

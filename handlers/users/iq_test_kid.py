@@ -15,7 +15,7 @@ from loader import dp, db, bot
 
 
 
-@dp.callback_query_handler(text='iq_test', state='*')
+@dp.callback_query_handler(text='iq_test_kid', state='*')
 async def starting_iq(call:CallbackQuery, state: FSMContext):
     await state.set_state('exam_iq')
     path_to_photo = r"D:/Новая папка (2)/mukammal-bot-paid-db_sqlite/photo's/example.jpg"
